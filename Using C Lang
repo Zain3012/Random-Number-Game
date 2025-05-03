@@ -1,0 +1,61 @@
+#include <stdio.h>   //header file for input/output - Include at the top of EACH FILE in this project.
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    static int computerScore = 0;
+    static int humanScore = 0;
+    int number, guess, tries = 5;
+    char playAgain;
+
+    srand(time(NULL));
+
+    // Game loop with for loop
+    for (;;) {
+        number = rand() % 20 + 1;
+
+        // says what this program does to user
+        printf("Welcome to the guessing game!\n");
+        printf("I am thinking of a number between 1 and 20.\n");
+
+        // game starts
+        for (int i = 0; i < tries; i++) {
+            printf("Enter your guess or press 0 to stop: ");
+            scanf("%d", &guess);
+
+            if (guess == 0) {
+                printf("You have left the game. The number was: %d\n", number);
+                computerScore++;
+                break;
+            } else if (guess == number) {
+                printf("Correct! The number was: %d\n", number);
+                humanScore++;
+                break;
+            } else if (guess < number) {
+                printf("The number is higher.\n");
+            } else {
+                printf("The number is lower.\n");
+            }
+
+            if (i == tries - 1) {
+                printf("Out of tries! The number was: %d\n", number);
+                computerScore++;
+            }
+        }
+
+        // gives the final score
+        printf("The current score is Computer: %d  Human: %d\n", computerScore, humanScore);
+        printf("***************************\n");
+
+        // Ask if user wants to play again
+        printf("Do you want to play again? (y/n): ");
+        scanf(" %c", &playAgain);
+
+        if (playAgain == 'n' || playAgain == 'N') {
+            break;  // Break the infinite for loop if the user does not want to play again
+        }
+    }
+
+    printf("Thank you for playing! Final Score - Computer: %d  Human: %d\n", computerScore, humanScore);
+    return 0;
+}
